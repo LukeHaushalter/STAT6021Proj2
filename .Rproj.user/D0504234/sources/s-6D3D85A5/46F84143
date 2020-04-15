@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1586979838386.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "46F84143",
+    "lastKnownWriteTime" : 1586979696,
+    "last_content_update" : 1586979838386,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "id" : "a99006e72eba46c89a43b888283ffed6",
+        "name" : "logreg",
+        "title" : "logreg"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "object_explorer"
+}
