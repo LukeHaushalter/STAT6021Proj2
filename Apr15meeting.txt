@@ -1,0 +1,6 @@
+Pat - Exploratory data analysis; Outliers? Trends in data? Drawing up plots
+Preston & Luke - Model validation - Are all variables needed in the model? Hypothesis (wald) tests
+Brad - Linear regression for SNAP
+
+
+How does group housing factor into the tabulation?
