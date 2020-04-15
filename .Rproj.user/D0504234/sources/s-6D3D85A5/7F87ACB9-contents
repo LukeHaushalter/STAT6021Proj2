@@ -11,7 +11,10 @@ cols <- c("LILATracts_1And10", "TractLOWI",
           "TractWhite", "TractBlack", 
           "TractAsian", "TractNHOPI",
           "TractAIAN", "TractOMultir",
-          "TractHispanic", "TractHUNV","TractSNAP")
+          "TractHispanic", "TractHUNV",
+          "Urban","TractSNAP",
+          "POP2010", "OHU2010",
+          "PovertyRate", "MedianFamilyIncome")
 logreg_data <- data[,cols]
 
 # Use glm to make a logistic regression model
