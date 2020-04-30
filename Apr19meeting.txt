@@ -1,0 +1,16 @@
+Pat - Vizualization ideas, not so much EDA. Recoding state variables to region. 
+Boxplot for SNAP
+% tracts considered low access heatmap
+
+Brad - Working on SNAP linear regression model
+Results are irregular - need to do deep dive into data
+Strange line in residual plot
+Maybe we'll group the tracts by country?
+
+Preston - Model Selection, measuring Residual deviance for increasingly 
+
+Luke - Where should we set the threshold f
+
+Does R have a similiar groupby/aggregate like Pandas?
+
+On the docket for Apr 23 meeting: Start Outlining/planning for report

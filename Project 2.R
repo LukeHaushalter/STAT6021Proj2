@@ -2,7 +2,58 @@
 library(openxlsx)
 data<-read.xlsx('DataDownload2015.xlsx', sheet = 3)
 
+# What % of tracts are urban?
+num.urban <- sum(data$Urban == 1)
+num.urban/nrow(data)
+# 75.72%
 
+# US Population accounted for in data
+us.pop <- sum(data$POP2010)
+# Approx. 308 mil
+
+# Population by state
+state.pops <- aggregate(data$POP2010,by=list(State=data$State), FUN=sum )
+
+# Racial populations by state
+states.white.pop <- aggregate(data$TractWhite, list(State=data$State), FUN=sum)
+states.black.pop <- aggregate(data$TractBlack, list(State=data$State), FUN=sum)
+states.asian.pop <- aggregate(data$TractAsian, list(State=data$State), FUN=sum)
+states.nhopi.pop <- aggregate(data$TractNHOPI, list(State=data$State), FUN=sum)
+states.aian.pop <- aggregate(data$TractAIAN, list(State=data$State), FUN=sum)
+states.omultir.pop <- aggregate(data$TractOMultir, list(State=data$State), FUN=sum)
+
+# Relative frequencies of racial populations by state
+states.white.pop$x <- states.white.pop$x/state.pops$x
+states.black.pop$x <- states.black.pop$x/state.pops$x
+states.asian.pop$x <- states.asian.pop$x/state.pops$x
+states.nhopi.pop$x <- states.nhopi.pop$x/state.pops$x
+states.aian.pop$x <- states.aian.pop$x/state.pops$x
+states.omultir.pop$x<-states.omultir.pop$x/state.pops$x
+
+# Can we infer anything about food access by looking a a tract's 
+# racial demographic makeup?
+
+# Add columns for relative freq of races
+data$pctWhite <- data$TractWhite/data$POP2010
+data$pctBlack <- data$TractBlack/data$POP2010
+data$pctAsian <- data$TractAsian/data$POP2010
+data$pctNHOPI <- data$TractNHOPI/data$POP2010
+data$pctAIAN <- data$TractAIAN/data$POP2010
+data$pctOMultir <- data$TractOMultir/data$POP2010
+
+# Create a dataframe to plot
+df <- rbind(
+  data.frame("State" = states.nhopi.pop$State, "pct"=states.nhopi.pop$x, "Race"="Native Hawaiian/Pacific Islander"),
+  data.frame("State" = states.aian.pop$State, "pct"=states.aian.pop$x, "Race"="American Indian/Native Alaskan"),
+  data.frame("State" = states.omultir.pop$State, "pct"=states.omultir.pop$x, "Race"="Multi-Racial/Other"),
+  data.frame("State" = states.asian.pop$State, "pct"=states.asian.pop$x, "Race"="Asian"),
+  data.frame("State" = states.black.pop$State, "pct"=states.black.pop$x, "Race"="Black"),
+  data.frame("State" = states.white.pop$State, "pct"=states.white.pop$x, "Race"="White")
+)
+
+library(ggplot2)
+ggplot(df, aes(x=State, y=pct)) + 
+  geom_bar(aes(fill=Race), stat="identity")
 # Set up logistic regression
 
 # Subset data to include a response and potential predictors
@@ -91,3 +142,4 @@ lines(x=c(0,1), y=c(0,1),col="red")
 auc <- performance(rates, measure="auc")
 auc
 # AUC of .84 indicates a model better than random guessing
+
