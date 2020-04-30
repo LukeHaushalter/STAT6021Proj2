@@ -54,6 +54,38 @@ df <- rbind(
 library(ggplot2)
 ggplot(df, aes(x=State, y=pct)) + 
   geom_bar(aes(fill=Race), stat="identity")
+
+# Plots by race
+
+state.low.access.pop <- aggregate(data$lapop1, list(State=data$State), FUN=sum)
+state.low.access.pop[2] <- state.low.access.pop[2]/state.pops[2]
+
+
+white.pop.la.pop <- cbind(states.white.pop, state.low.access.pop[2])
+colnames(white.pop.la.pop)<- c("State", "Rel. White Pop.", "Rel. LA Pop.")
+plot(white.pop.la.pop$`Rel. White Pop.`, white.pop.la.pop$`Rel. LA Pop.`)
+
+black.pop.la.pop <- cbind(states.black.pop, state.low.access.pop[2])
+colnames(black.pop.la.pop)<- c("State", "Rel. Black Pop.", "Rel. LA Pop.")
+plot(black.pop.la.pop$`Rel. Black Pop.`, black.pop.la.pop$`Rel. LA Pop.`)
+
+asian.pop.la.pop <- cbind(states.asian.pop, state.low.access.pop[2])
+colnames(asian.pop.la.pop)<- c("State", "Rel. Asian Pop.", "Rel. LA Pop.")
+plot(asian.pop.la.pop$`Rel. Asian Pop.`, asian.pop.la.pop$`Rel. LA Pop.`)
+
+nhopi.pop.la.pop <- cbind(states.nhopi.pop, state.low.access.pop[2])
+colnames(nhopi.pop.la.pop)<- c("State", "Rel. NHOPI Pop.", "Rel. LA Pop.")
+plot(nhopi.pop.la.pop$`Rel. NHOPI Pop.`, nhopi.pop.la.pop$`Rel. LA Pop.`)
+
+aian.pop.la.pop <- cbind(states.aian.pop, state.low.access.pop[2])
+colnames(aian.pop.la.pop)<- c("State", "Rel. AIAN Pop.", "Rel. LA Pop.")
+plot(aian.pop.la.pop$`Rel. AIAN Pop.`, aian.pop.la.pop$`Rel. LA Pop.`)
+
+omultir.pop.la.pop <- cbind(states.omultir.pop, state.low.access.pop[2])
+colnames(omultir.pop.la.pop)<- c("State", "Rel. Multi-racial/Other Pop.", "Rel. LA Pop.")
+plot(omultir.pop.la.pop$`Rel. Multi-racial/Other Pop.`, omultir.pop.la.pop$`Rel. LA Pop.`)
+
+
 # Set up logistic regression
 
 # Subset data to include a response and potential predictors
@@ -142,4 +174,14 @@ lines(x=c(0,1), y=c(0,1),col="red")
 auc <- performance(rates, measure="auc")
 auc
 # AUC of .84 indicates a model better than random guessing
+
+
+confint(logreg)
+
+# Could some variables be dropped
+# Analysis of Deviance - Deviances by variable
+deviance.by.variable <- anova(logreg)$Deviance
+
+# Plotted and ordered - Is there an "elbow?"
+plot(deviance.by.variable[order(deviance.by.variable, decreasing = T)])
 
